@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GithubAuthWidFirebase @atif</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    #loginBtn {
+      background-color: #4078c0;
+      color: #fff;
+    }
+
+    #loginBtn:hover {
+      background-color: #305e93;
+    }
+
+    #logoutBtn {
+      background-color: #e74c3c;
+      color: #fff;
+    }
+
+    #logoutBtn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Github Authentication with Firebase</h1>
+    <button id="loginBtn">Login with GitHub</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+  <!-- Add Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+  <script>
+    // Replace with your Firebase config object from the Firebase console
+    var firebaseConfig = {
+        apiKey: "AIzaSyAuX9G4ziX8zEv1DcrWloyWZxaTvw1kb8s",
+        authDomain: "ccproaatif.firebaseapp.com",
+        projectId: "ccproaatif",
+        storageBucket: "ccproaatif.appspot.com",
+        messagingSenderId: "477553311855",
+        appId: "1:477553311855:web:edf1610f815330be3d8d9a",
+        measurementId: "G-49DYT941DG"
+      };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Get references to the buttons in HTML
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Add event listeners to the buttons
+    loginBtn.addEventListener('click', signInWithGithub);
+    logoutBtn.addEventListener('click', signOut);
+
+    // Function to sign in with GitHub
+    function signInWithGithub() {
+      const provider = new firebase.auth.GithubAuthProvider();
+
+      firebase.auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          console.log('Authenticated user:', user);
+        })
+        .catch((error) => {
+          console.error('Authentication failed:', error);
+        });
+    }
+
+    // Function to sign outs
+    function signOut() {
+      firebase.auth()
+        .signOut()
+        .then(() => {
+          console.log('User signed out');
+        })
+        .catch((error) => {
+          console.error('Sign-out error:', error);
+        });
+    }
+  </script>
+</body>
+</html>
